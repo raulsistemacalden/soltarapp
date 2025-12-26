@@ -140,8 +140,12 @@ function aceptarTodo() {
 
 function ocultarBanner() {
     var banner = document.getElementById('soltar-cookie-banner');
+    console.log('Intentando ocultar banner:', banner); // Debug
     if (banner) {
-        banner.remove();
+        banner.parentNode.removeChild(banner); // Método más compatible que remove()
+        console.log('Banner eliminado'); // Debug
+    } else {
+        console.log('Banner no encontrado'); // Debug
     }
 }
 
