@@ -1,54 +1,183 @@
-// WALO - INICIO DEL SCRIPT DE COOKIES
-console.log("WALO: El script ha sido cargado por el navegador.");
+// ============================================
+// SISTEMA DE COOKIES COMPLETO - SOLTAR.APP
+// ============================================
 
-setTimeout(function() {
-    console.log("WALO: Iniciando intento de inyección tras 1 segundo...");
+console.log("WALO: Sistema de cookies cargado");
 
-    // 1. Verificación de seguridad: ¿Ya existe el banner?
-    if (document.getElementById('walo-cookie-banner')) {
-        console.log("WALO: El banner ya existe. No hacemos nada.");
+// Verificar si ya aceptó
+var cookiePrefs = localStorage.getItem("soltarCookiePrefs");
+if (cookiePrefs) {
+    console.log("WALO: Usuario ya configuró cookies");
+} else {
+    // Mostrar banner después de 1 segundo
+    setTimeout(mostrarBanner, 1000);
+}
+
+function mostrarBanner() {
+    if (document.getElementById('soltar-cookie-banner')) {
         return;
     }
 
-    // 2. Verificación de aceptación previa
-    var yaAcepto = localStorage.getItem("waloCookieAccepted");
-    if (yaAcepto === "true") {
-        console.log("WALO: Usuario ya aceptó antes. No mostramos nada.");
-        return;
-    }
-
-    // 3. Crear el elemento DIV contenedor (Sin usar template literals complejos)
-    var bannerDiv = document.createElement('div');
-    bannerDiv.id = 'walo-cookie-banner';
+    // Crear banner
+    var banner = document.createElement('div');
+    banner.id = 'soltar-cookie-banner';
+    banner.innerHTML = `
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <p><strong>Gestionamos tu privacidad.</strong> Usamos cookies para mejorar tu experiencia en SOLTAR.app. Al continuar, aceptas nuestra política de privacidad.</p>
+            </div>
+            <div class="cookie-buttons">
+                <button id="btn-cookie-settings" class="btn-secondary">Configurar</button>
+                <button id="btn-cookie-accept-all" class="btn-primary">ACEPTAR TODO</button>
+            </div>
+        </div>
+    `;
     
-    // 4. Insertar el HTML como una sola línea de texto para evitar errores de sintaxis
-    bannerDiv.innerHTML = '<div class="cookie-content"><div class="cookie-text"><p><strong>Gestionamos tu privacidad.</strong> Usamos cookies para mejorar tu experiencia en SOLTAR.app. Al continuar, aceptas nuestra política de privacidad.</p></div><div class="cookie-buttons"><button id="btn-walo-close">Cerrar</button><button id="btn-walo-accept">ACEPTAR TODO</button></div></div>';
+    document.body.appendChild(banner);
+    
+    // Eventos
+    document.getElementById('btn-cookie-settings').onclick = abrirModal;
+    document.getElementById('btn-cookie-accept-all').onclick = aceptarTodo;
+}
 
-    // 5. Inyectarlo en el documento
-    document.body.appendChild(bannerDiv);
-    console.log("WALO: HTML inyectado exitosamente en el Body.");
+function abrirModal() {
+    if (document.getElementById('cookie-modal')) return;
+    
+    var modal = document.createElement('div');
+    modal.id = 'cookie-modal';
+    modal.innerHTML = `
+        <div class="cookie-modal-overlay"></div>
+        <div class="cookie-modal-content">
+            <div class="cookie-modal-header">
+                <h2>Centro de Privacidad</h2>
+                <button class="cookie-modal-close" id="btn-modal-close">&times;</button>
+            </div>
+            
+            <div class="cookie-modal-body">
+                <p class="cookie-intro">Respetamos tu privacidad. Aquí puedes elegir qué cookies aceptas.</p>
+                
+                <div class="cookie-category">
+                    <div class="cookie-category-header">
+                        <div class="cookie-category-info">
+                            <h3>🔒 Cookies Necesarias</h3>
+                            <p>Esenciales para el funcionamiento del sitio. No se pueden desactivar.</p>
+                        </div>
+                        <label class="cookie-toggle disabled">
+                            <input type="checkbox" checked disabled>
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="cookie-category">
+                    <div class="cookie-category-header">
+                        <div class="cookie-category-info">
+                            <h3>📊 Cookies Analíticas</h3>
+                            <p>Nos ayudan a entender cómo usas el sitio para mejorarlo.</p>
+                        </div>
+                        <label class="cookie-toggle">
+                            <input type="checkbox" id="toggle-analytics" checked>
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="cookie-category">
+                    <div class="cookie-category-header">
+                        <div class="cookie-category-info">
+                            <h3>🎯 Cookies de Marketing</h3>
+                            <p>Usadas para mostrarte contenido y anuncios relevantes.</p>
+                        </div>
+                        <label class="cookie-toggle">
+                            <input type="checkbox" id="toggle-marketing">
+                            <span class="cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cookie-modal-footer">
+                <button id="btn-reject-all" class="btn-text">Rechazar todo</button>
+                <div class="cookie-modal-actions">
+                    <button id="btn-save-prefs" class="btn-secondary">Guardar preferencias</button>
+                    <button id="btn-accept-all-modal" class="btn-primary">Aceptar todo</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    
+    // Eventos del modal
+    document.getElementById('btn-modal-close').onclick = cerrarModal;
+    document.querySelector('.cookie-modal-overlay').onclick = cerrarModal;
+    document.getElementById('btn-reject-all').onclick = rechazarTodo;
+    document.getElementById('btn-save-prefs').onclick = guardarPreferencias;
+    document.getElementById('btn-accept-all-modal').onclick = aceptarTodoModal;
+}
 
-    // 6. Configurar los botones (con un pequeño retraso para asegurar que el DOM los reconozca)
-    setTimeout(function(){
-        var btnAccept = document.getElementById("btn-walo-accept");
-        var btnClose = document.getElementById("btn-walo-close");
+function cerrarModal() {
+    var modal = document.getElementById('cookie-modal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = '';
+    }
+}
 
-        if(btnAccept) {
-            btnAccept.onclick = function() {
-                localStorage.setItem("waloCookieAccepted", "true");
-                document.getElementById("walo-cookie-banner").style.display = "none";
-                console.log("WALO: Aceptado y guardado.");
-            };
-        }
+function aceptarTodo() {
+    var prefs = {
+        necessary: true,
+        analytics: true,
+        marketing: true,
+        timestamp: new Date().toISOString()
+    };
+    localStorage.setItem("soltarCookiePrefs", JSON.stringify(prefs));
+    console.log("WALO: Usuario aceptó todas las cookies", prefs);
+    
+    var banner = document.getElementById('soltar-cookie-banner');
+    if (banner) banner.remove();
+}
 
-        if(btnClose) {
-            btnClose.onclick = function() {
-                document.getElementById("walo-cookie-banner").style.display = "none";
-            };
-        }
-    }, 500);
+function aceptarTodoModal() {
+    aceptarTodo();
+    cerrarModal();
+}
 
-}, 1000);// Espera 1000 milisegundos (1 segundo) antes de ejecutarse
+function rechazarTodo() {
+    var prefs = {
+        necessary: true,
+        analytics: false,
+        marketing: false,
+        timestamp: new Date().toISOString()
+    };
+    localStorage.setItem("soltarCookiePrefs", JSON.stringify(prefs));
+    console.log("WALO: Usuario rechazó cookies opcionales", prefs);
+    
+    var banner = document.getElementById('soltar-cookie-banner');
+    if (banner) banner.remove();
+    cerrarModal();
+}
+
+function guardarPreferencias() {
+    var analytics = document.getElementById('toggle-analytics').checked;
+    var marketing = document.getElementById('toggle-marketing').checked;
+    
+    var prefs = {
+        necessary: true,
+        analytics: analytics,
+        marketing: marketing,
+        timestamp: new Date().toISOString()
+    };
+    
+    localStorage.setItem("soltarCookiePrefs", JSON.stringify(prefs));
+    console.log("WALO: Preferencias guardadas", prefs);
+    
+    var banner = document.getElementById('soltar-cookie-banner');
+    if (banner) banner.remove();
+    cerrarModal();
+}
+
 // SOLTAR - CAMBIAR FONDOS A VERDE
 document.addEventListener('DOMContentLoaded', function() {
     document.documentElement.style.setProperty('--color-background-primary', '#6da16e', 'important');
