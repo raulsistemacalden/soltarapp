@@ -40,22 +40,7 @@ body:not([class*="settings"]) .absolute.right-9 button {
     font-weight: 600 !important;
 }
 
-  /* --- CSS BANNER COOKIES (Estilo Exacto) --- */
-  #walo-cookie-banner {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #d0e8e6; /* Fondo general de la barra */
-    color: #1a1a1a;
-    padding: 20px 5%;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-    z-index: 2147483647;
-    box-sizing: border-box;
-    font-family: sans-serif;
-  }
-
+  
   #walo-cookie-banner:empty {
     display: none !important;
   }
