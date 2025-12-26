@@ -483,4 +483,9 @@ body:not([class*="settings"]) .absolute.right-9 button {
     .cookie-buttons button {
         width: 100%;
     }
+    
+    #soltar-cookie-banner {
+    /* ... tus estilos existentes ... */
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
 }

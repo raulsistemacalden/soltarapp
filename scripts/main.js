@@ -135,8 +135,18 @@ function aceptarTodo() {
     localStorage.setItem("soltarCookiePrefs", JSON.stringify(prefs));
     console.log("WALO: Usuario aceptó todas las cookies", prefs);
     
+    ocultarBanner();
+}
+
+function ocultarBanner() {
     var banner = document.getElementById('soltar-cookie-banner');
-    if (banner) banner.remove();
+    if (banner) {
+        banner.style.opacity = '0';
+        banner.style.transform = 'translateY(100%)';
+        setTimeout(function() {
+            banner.remove();
+        }, 300);
+    }
 }
 
 function aceptarTodoModal() {
@@ -154,8 +164,7 @@ function rechazarTodo() {
     localStorage.setItem("soltarCookiePrefs", JSON.stringify(prefs));
     console.log("WALO: Usuario rechazó cookies opcionales", prefs);
     
-    var banner = document.getElementById('soltar-cookie-banner');
-    if (banner) banner.remove();
+    ocultarBanner();
     cerrarModal();
 }
 
@@ -173,8 +182,7 @@ function guardarPreferencias() {
     localStorage.setItem("soltarCookiePrefs", JSON.stringify(prefs));
     console.log("WALO: Preferencias guardadas", prefs);
     
-    var banner = document.getElementById('soltar-cookie-banner');
-    if (banner) banner.remove();
+    ocultarBanner();
     cerrarModal();
 }
 
