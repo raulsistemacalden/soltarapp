@@ -141,11 +141,7 @@ function aceptarTodo() {
 function ocultarBanner() {
     var banner = document.getElementById('soltar-cookie-banner');
     if (banner) {
-        banner.style.opacity = '0';
-        banner.style.transform = 'translateY(100%)';
-        setTimeout(function() {
-            banner.remove();
-        }, 300);
+        banner.remove();
     }
 }
 
