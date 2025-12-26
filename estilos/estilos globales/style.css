@@ -1,213 +1,134 @@
-/* 1. IMPORTAR FUENTE LEXEND DECA DE GOOGLE */
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
-/* 2. IMPORTAR TU FUENTE BYGONEST DESDE GITHUB */
-@font-face {
-  font-family: 'Bygonest';
-  src: url('https://cdn.jsdelivr.net/gh/raulsistemacalden/soltarapp@main/fuentessoltar/Bygonest/Clean/Bygonest%20Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-/* 3. IMPORTAR FUENTE MERCHANT LEDGER DESDE GITHUB */
-@font-face {
-  font-family: 'Merchant Ledger';
-  src: url('https://cdn.jsdelivr.net/gh/raulsistemacalden/soltarapp@main/fuentessoltar/merchant-ledger-fuente/TTF/MerchantLedger.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-/* 4. IMPORTAR FUENTE NOT MY TYPE TYPEWRITER DESDE GITHUB */
-@font-face {
-  font-family: 'Not My Type';
-  src: url('https://cdn.jsdelivr.net/gh/raulsistemacalden/soltarapp@main/fuentessoltar/not-my-type-typewriter-fuente/Not-my-Type.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-/* 5. IMPORTAR FUENTE TYPRIGHTER DESDE GITHUB */
-@font-face {
-  font-family: 'Typrighter';
-  src: url('https://cdn.jsdelivr.net/gh/raulsistemacalden/soltarapp@main/fuentessoltar/typrighter/typrighter-B.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
 /* =====================================================
-   1. HEADER: FLOTANTE Y CON COLOR
+   1. GLOBAL Y ESCRITORIO (CONFIGURACIÓN BASE)
 ===================================================== */
-body:not([class*="settings"])
+.post-author {
+    display: none !important;
+}
 #root-header-v2_1:not([class*="settings"]) {
-    /* 1. POSICIÓN: Absolute para que flote SOBRE la imagen */
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin: 0 auto !important;
-    z-index: 50 !important;
-
-    /* 2. DIMENSIONES: Más chico que el 100% para dejar ver los lados */
-    width: calc(100% - 4rem) !important; 
-    max-width: 1800px !important;
-    min-height: 64px !important;
-    max-height: 64px !important;
-
-    /* 3. ESTILO VISUAL: Blanco y con bordes (Tu color vuelve aquí) */
-    border: none !important;
-    border-radius: 0 0 20px 20px !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-    
-    display: flex !important; 
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 3.25rem;
+    background-color: #ebf4dd !important;     
+}
+/* Logo Escritorio */
+body:not([class*="settings"]) #community-logo {
+    max-height: 42px !important;
+    width: auto !important;
 }
 
-/* Espaciado interno de iconos */
-body:not([class*="settings"]) #root-header-v2_1 > div:last-child {
-    margin-left: auto !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 15px !important; 
-}
-
-/* =====================================================
-   2. TRUCO DE MAGIA: HACER TRANSPARENTES LAS CAPAS DE CIRCLE
-   Esto quita el fondo gris/blanco que tapaba tu imagen a los costados
-===================================================== */
-body:not([class*="settings"]) .bg-secondary,
-body:not([class*="settings"]) [data-testid="full-screen-layout-wrapper"],
-body:not([class*="settings"]) [data-testid="standard-layout-v2"],
-body:not([class*="settings"]) [data-testid="community-content"],
-body:not([class*="settings"]) [data-testid="standard-layout-v2-wrapper"],
-body:not([class*="settings"]) [data-testid="standard-layout-v2-wrapper"] > div,
-body:not([class*="settings"]) main {
-    background-color: transparent !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-/* =====================================================
-   3. HERO: LA IMAGEN DE FONDO
-===================================================== */
-#walo-hero-wrapper {
-    width: 100% !important; 
+/* Menú Central Escritorio */
+body:not([class*="settings"]) [data-testid="header-navigation-bar"] {
     position: relative !important;
-    
-    /* Imagen */
-    background-image: url('https://assets-v2.circle.so/cfbfy41s5d8fo56lma466hhvun3i');
-    background-size: cover !important;
-    background-position: center top !important;
-    background-repeat: no-repeat !important;
-    
-    /* Layout */
     display: flex !important;
-    flex-direction: column !important;
     justify-content: center !important;
-    align-items: center !important;
-    z-index: 1 !important;
-
-    /* PADDING: Empujamos el texto hacia abajo para que no quede tapado por el menú */
-    padding: 250px 20px 250px 20px !important; 
-    margin: 0 !important;
+    flex: 1 !important;
+}
+body:not([class*="settings"]) [data-testid="header-navigation-bar"] a {
+    color: #69655f!important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+}
+body:not([class*="settings"]) [data-testid="header-navigation-bar"] a:hover {
+    color: #69655f!important;
 }
 
-/* =====================================================
-   4. ESTILOS DE TEXTO Y BOTONES (Tus estilos originales)
-===================================================== */
-.walo-hero-content {
-    max-width: 900px !important;
-    text-align: center !important;
-    color: #264990; 
-    position: relative;
-    z-index: 10;
-}
-.walo-title {
-    font-family: 'Lexend Deca', sans-serif !important;
-    font-size: 4.4rem !important;
-    line-height: 1 !important;
+/* Botones Derecha Escritorio */
+body:not([class*="settings"]) .absolute.right-9 button {
+    background-color: #bef264 !important;
+    color: #1f2937 !important;
+    border-radius: 6px !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
     font-weight: 600 !important;
-    margin-bottom: 24px !important;
-    color: #264653 !important;
-    text-shadow: 0 0 30px rgba(255,255,255,0.8);
 }
-.walo-subtitle {
-    font-family: 'Lexend Deca', sans-serif !important;
-    font-size: 2.375rem !important;
-    line-height: 1.2 !important;
-    color: #264653 !important;
-    font-weight: 700 !important;
-    margin-bottom: 32px !important;
-    text-shadow: 0 0 20px rgba(255,255,255,0.8);
-}
-.walo-parrafo {
-    font-family: 'Lexend Deca', sans-serif !important;  
-    font-size: 1.125rem !important;
-    line-height: 1.4 !important;
-    color: #264653 !important;
-    font-weight: 400 !important;
-    margin-bottom: 32px !important;
-    text-shadow: 0 0 20px rgba(255,255,255,0.8);
-}
-.walo-btn-wrapper {
-    margin-top: 20px;  
-    display: flex;
-    gap: 12px;            
-    justify-content: center;
-    flex-wrap: wrap;      
-}
-.walo-btn1 {
-    font-family: 'Lexend Deca', sans-serif !important;
-    display: inline-block !important;
-    background-color: #6da16e !important; 
-    color: #ffffff !important;
-    padding: 14px 32px !important;
-    border-radius: 50px !important;
-    font-weight: 700 !important;
-    text-decoration: none !important;
-    text-transform: uppercase !important;
-    font-size: 14px !important;
-    letter-spacing: 0.5px !important;
-    box-shadow: 0 4px 15px rgba(0, 85, 255, 0.3) !important;
-    transition: transform 0.2s ease !important;
-}
-.walo-btn2 {
-    font-family: 'Lexend Deca', sans-serif !important;
-    display: inline-block !important;
-    background-color: #264653 !important; 
-    color: #ffffff !important;
-    padding: 14px 32px !important;
-    border-radius: 50px !important;
-    font-weight: 700 !important;
-    text-decoration: none !important;
-    text-transform: uppercase !important;
-    font-size: 14px !important;
-    letter-spacing: 0.5px !important;
-    box-shadow: 0 4px 15px rgba(0, 85, 255, 0.3) !important;
-    transition: transform 0.2s ease !important;
-}
-.walo-btn1:hover { transform: translateY(-2px); }
-.walo-btn2:hover { transform: translateY(-2px); }
 
-/* 5. RESPONSIVE (Ajustes para portátiles y móviles) */
-@media (max-width: 2000px) {
-    #walo-hero-wrapper {
-        padding: 220px 20px 250px 20px !important;
-        background-position: center top !important;
+  /* --- CSS BANNER COOKIES (Estilo Exacto) --- */
+  #walo-cookie-banner {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #d0e8e6; /* Fondo general de la barra */
+    color: #1a1a1a;
+    padding: 20px 5%;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    z-index: 2147483647;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+
+  #walo-cookie-banner:empty {
+    display: none !important;
+  }
+
+  .cookie-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 15px;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* En escritorio, texto a la izquierda y botones a la derecha */
+  @media (min-width: 768px) {
+    .cookie-content {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
     }
-    .walo-title {
-        font-size: 42px !important; 
-    }
+  }
+
+  .cookie-buttons {
+    display: flex;
+    gap: 12px; /* Espacio entre botones */
+  }
+
+  /* BOTÓN IZQUIERDO: MANAGE COOKIES */
+  #btn-walo-close {
+    background-color: #007C89; /* Azul petróleo exacto */
+    border: none;
+    color: #ffffff; /* Letra blanca */
+    padding: 12px 24px;
+    border-radius: 50px; /* Bordes redondos */
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase; /* Todo mayúsculas */
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s;
+  }
+  
+  #btn-walo-close:hover {
+    transform: scale(1.05); /* efecto pop al pasar el mouse */
+  }
+
+  /* BOTÓN DERECHO: ACCEPT ALL */
+  #btn-walo-accept {
+    background-color: #bef264; /* Verde Lima exacto */
+    border: none;
+    color: #222222; /* Letra oscura */
+    padding: 12px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase; /* Todo mayúsculas */
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s;
+  }
+
+  #btn-walo-accept:hover {
+    transform: scale(1.05); /* Efecto pop al pasar el mouse */
+  }
+/* SOLTAR - FONDOS VERDES */
+/* QUITAR PUNTO AZUL */
+.unread-indicator,
+[class*="unread"],
+.space-unread-dot {
+    display: none !important;
 }
-@media (max-width: 1024px) {
-    #walo-hero-wrapper {
-        padding: 180px 20px 200px 20px !important;
-        background-position: center top !important;
-    }
-    .walo-title { font-size: 38px !important; }
-}
-@media (max-width: 768px) {
-    #walo-hero-wrapper {
-        padding: 30px 20px 200px 20px !important;
-        min-height: auto !important;
-    }
-    .walo-title { font-size: 32px !important; }
-    .walo-subtitle { font-size: 16px !important; }
-    .walo-hero-content { padding-top: 0px !important; }
-}
+
