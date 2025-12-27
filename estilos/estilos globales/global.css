@@ -95,6 +95,9 @@ body:not([class*="settings"]) .absolute.right-9 button {
 }
 
 @media (min-width: 768px) {
+    #mainHeader{
+        background-color: #ebf4dd !important;
+    }
     .cookie-content {
         flex-direction: row;
         justify-content: space-between;
@@ -384,6 +387,9 @@ body:not([class*="settings"]) .absolute.right-9 button {
 
 /* Responsive */
 @media (max-width: 640px) {
+    #mainHeader{
+        background-color: #ebf4dd !important;
+    }
     .cookie-modal-content {
         width: 95%;
         max-height: 90vh;
